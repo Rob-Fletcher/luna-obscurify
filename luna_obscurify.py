@@ -33,14 +33,14 @@ def get_object_distance(obj_radius: float = None, avg_moon_dist: bool = True) ->
         moon_dist = get_moon_dist()
     obj_dist = moon_dist * (obj_radius / MOON_RADIUS)
 
-    print(f"Object distance should be {obj_dist} in meters or {obj_dist * 100.0} in centimeters.")
+    return obj_dist
 
 
-def main(args):
-    diameter_meters = (float(args.diameter) / 100.0)  # Convert cm to m
+def calculate(obj_diameter: float, use_average: bool) -> float:
+    diameter_meters = (float(obj_diameter) / 100.0)  # Convert cm to m
     radius_meters = (diameter_meters / 2.0)  # convert diameter to radius
-    get_object_distance(obj_radius=radius_meters, avg_moon_dist=args.average)
-    return
+    dist = get_object_distance(obj_radius=radius_meters, avg_moon_dist=use_average)
+    return dist
 
 
 if __name__ == '__main__':
@@ -54,4 +54,5 @@ if __name__ == '__main__':
     if args.diameter is None:
         raise ValueError("Must provide object radius with option -d")
 
-    main(args)
+    dist = calculate(args)
+    print(f"your object should be held at {dist} meters")
